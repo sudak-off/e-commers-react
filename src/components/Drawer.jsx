@@ -1,4 +1,5 @@
 import React from 'react';
+import Info from "./Info";
 
 const Drawer = ({onClose, onRemove, items = []}) => {
     return (
@@ -10,11 +11,12 @@ const Drawer = ({onClose, onRemove, items = []}) => {
 
                 {
                     items.length > 0 ? (
-                        <div className='wrapper-items' >
+                        <div className='wrapper-items'>
                             <div className="items">
                                 {
                                     items.map((obj) => (
-                                        <div className="cartItem d-flex justify-between align-center mb-20">
+                                        <div key={obj.id}
+                                             className="cartItem d-flex justify-between align-center mb-20">
                                             <img width={70} height={70} src={obj.imageUrl} alt="shoes"/>
                                             <div className='ml-20 mr-10'>
                                                 <p>{obj.title}</p>
@@ -47,16 +49,9 @@ const Drawer = ({onClose, onRemove, items = []}) => {
                             </div>
                         </div>
                     ) : (
-                        <div className="cartEmpty d-flex align-center justify-center flex-column flex">
-                            <img className="mb-20" width="120px" height="120px" src="/img/empty-cart.jpg"
-                                 alt="Empty"/>
-                            <h2>Корзина пустая</h2>
-                            <p className="opacity-6">Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ.</p>
-                            <button onClick={onClose} className="greenButton">
-                                <img src="/img/arrow.svg" alt="Arrow"/>
-                                Вернуться назад
-                            </button>
-                        </div>
+                        <Info title='Корзина пустая'
+                              description='Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ.'
+                              image='/img/empty-cart.jpg'/>
                     )
                 }
 

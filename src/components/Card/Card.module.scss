@@ -9,6 +9,9 @@
 
     .plus{
         cursor: pointer;
+        position: relative;
+        top: -2px;
+        left: -7px;
     }
 
     &:hover {
