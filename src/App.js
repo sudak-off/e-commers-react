@@ -6,6 +6,7 @@ import Drawer from "./components/Drawer";
 import Home from "./pages/Home";
 import Favorites from "./pages/Favorites";
 import AppContext from "./context";
+import Orders from "./pages/Orders";
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
     const [cartOpened, setCartOpened] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
 
+console.log(cartItems)
 
     useEffect(() => {
         async function fetchData() {
@@ -80,6 +82,10 @@ function App() {
         return cartItems.some((obj) => Number(obj.id) === Number(id))
     }
 
+    const numbFnt = (num) => {
+        return num.toLocaleString('ua-UA');
+    }
+
     return (
         <AppContext.Provider value={{
             items,
@@ -87,8 +93,10 @@ function App() {
             favorites,
             isItemsAdded,
             onAddToFavorite,
+            onAddToCart,
             setCartOpened,
             setCartItems,
+            numbFnt,
         }}>
             <div className="wrapper clear">
                 {cartOpened ?
@@ -110,6 +118,10 @@ function App() {
 
                 <Route path="/favorites" exact>
                     <Favorites/>
+                </Route>
+
+                <Route path="/orders" >
+                    <Orders />
                 </Route>
             </div>
         </AppContext.Provider>

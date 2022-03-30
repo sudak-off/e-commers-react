@@ -1,16 +1,16 @@
 import React, {useContext, useState} from 'react';
 import Info from "./Info";
-import AppContext from "../context";
 import axios from 'axios'
+import {useCart} from "../hooks/useCart";
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const Drawer = ({onClose, onRemove, items = []}) => {
-
-    const {cartItems, setCartItems} = useContext(AppContext);
+    const {cartItems, totalPrice, numbFnt, setCartItems} = useCart()
     const [orderId, setOrderId] = useState(null);
     const [isOrderComplete, setIsOrderComplete] = useState(false);
     const [isLoading, setIsLoading] = useState(false)
+
 
     const onClickOrder = async () => {
         try {
@@ -46,7 +46,7 @@ const Drawer = ({onClose, onRemove, items = []}) => {
                         <img width={70} height={70} src={obj.imageUrl} alt="shoes"/>
                         <div className='ml-20 mr-10'>
                             <p>{obj.title}</p>
-                            <b>{obj.price} грн.</b>
+                            <b>{numbFnt(obj.price)} грн.</b>
                         </div>
                         <img onClick={() => onRemove(obj.id)} className='removeBtn'
                              src="/img/btn-remove.svg"
@@ -58,12 +58,7 @@ const Drawer = ({onClose, onRemove, items = []}) => {
                         <li className='d-flex'>
                             <span>Итого:</span>
                             <div></div>
-                            <b>21 234 грн.</b>
-                        </li>
-                        <li className='d-flex'>
-                            <span>Налог 5%:</span>
-                            <div></div>
-                            <b>2 890 грн.</b>
+                            <b>{numbFnt(totalPrice)} грн.</b>
                         </li>
                     </ul>
 
