@@ -1,8 +1,8 @@
 import React, {useContext, useState} from 'react';
 import ContentLoader from "react-content-loader"
+import AppContext from "../../context";
 
 import styles from './Card.module.scss'
-import AppContext from "../../context";
 
 
 const Card = ({
@@ -19,20 +19,16 @@ const Card = ({
 
     const {isItemsAdded, numbFnt} = useContext(AppContext);
     const [isFavorite, setIsFavorite] = useState(favorited);
+    const obj = {id, parentId: id, title, imageUrl, price}
 
     const onClickPlus = () => {
-        onPlus({id, title, imageUrl, price})
+        onPlus(obj)
     }
 
     const onClickFavorite = () => {
-        onFavorite({id, title, imageUrl, price})
+        onFavorite(obj)
         setIsFavorite(!isFavorite)
     }
-
-    // const numbFnt = (num) => {
-    //     return num.toLocaleString('ua-UA');
-    // }
-
 
     return (
         <div className={styles.card}>
@@ -54,7 +50,7 @@ const Card = ({
                 ) : (<>
                     {onFavorite &&
                         <div className={styles.favorite} onClick={onClickFavorite}>
-                            <img src={!isFavorite ? "/img/heart-unliked.svg" : "/img/heart-like.svg"} alt="like"/>
+                            <img src={!isFavorite ? "img/heart-unliked.svg" : "img/heart-like.svg"} alt="like"/>
                         </div>}
                     <img width='100%' height={135} src={imageUrl} alt="shoes"/>
                     <h5>{title}</h5>
@@ -64,7 +60,7 @@ const Card = ({
                             <b>{numbFnt(price)} грн.</b>
                         </div>
                         {onPlus && <img className={styles.plus} onClick={onClickPlus}
-                                        src={isItemsAdded(id) ? '/img/btn-checked.svg' : '/img/btn-plus.svg'}
+                                        src={isItemsAdded(id) ? 'img/btn-checked.svg' : 'img/btn-plus.svg'}
                                         alt="plus"/>}
                     </div>
                 </>)
