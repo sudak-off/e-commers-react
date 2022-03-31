@@ -1,6 +1,6 @@
 import React, {createContext, useEffect, useState} from "react";
 import axios from "axios";
-import {Route} from 'react-router-dom'
+import {Route, Switch} from 'react-router-dom'
 import Header from "./components/Header";
 import Drawer from "./components/Drawer/Drawer";
 import Home from "./pages/Home";
@@ -53,7 +53,7 @@ function App() {
                 await axios.delete(`https://622a55b914ccb950d21a16d7.mockapi.io/Cart/${findItem.id}`);
             } else {
                 setCartItems((prev) => [...prev, obj]);
-                const { data } = await axios.post('https://622a55b914ccb950d21a16d7.mockapi.io/Cart', obj);
+                const {data} = await axios.post('https://622a55b914ccb950d21a16d7.mockapi.io/Cart', obj);
                 setCartItems((prev) =>
                     prev.map((item) => {
                         if (item.parentId === data.parentId) {
@@ -127,26 +127,28 @@ function App() {
                         opened={cartOpened}/>
                 <Header onClickCart={() => setCartOpened(true)}/>
 
-                <Route path='' exact>
-                    <Home
-                        items={items}
-                        cartItems={cartItems}
-                        searchValue={searchValue}
-                        setSearchValue={setSearchValue}
-                        onChangeSearchInput={onChangeSearchInput}
-                        onAddToFavorite={onAddToFavorite}
-                        onAddToCart={onAddToCart}
-                        isLoading={isLoading}
-                    />
-                </Route>
+                <Switch>
+                    <Route path='/' exact>
+                        <Home
+                            items={items}
+                            cartItems={cartItems}
+                            searchValue={searchValue}
+                            setSearchValue={setSearchValue}
+                            onChangeSearchInput={onChangeSearchInput}
+                            onAddToFavorite={onAddToFavorite}
+                            onAddToCart={onAddToCart}
+                            isLoading={isLoading}
+                        />
+                    </Route>
 
-                <Route path="favorites" exact>
-                    <Favorites/>
-                </Route>
+                    <Route path="/favorites" exact>
+                        <Favorites/>
+                    </Route>
 
-                <Route path="orders">
-                    <Orders/>
-                </Route>
+                    <Route path="/orders">
+                        <Orders/>
+                    </Route>
+                </Switch>
             </div>
         </AppContext.Provider>
     );
