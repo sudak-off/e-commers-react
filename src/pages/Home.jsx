@@ -44,7 +44,7 @@ const Home = ({
                     <input onChange={onChangeSearchInput} value={searchValue} type="text" placeholder='Поиск...'/>
                 </div>
             </div>
-            <div className="d-flex flex-wrap">
+            <div className="d-flex flex-wrap justify-center">
                 {renderItems()}
             </div>
         </div>
